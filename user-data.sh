@@ -1,0 +1,21 @@
+#!/bin/bash
+#!/bin/bash
+# Install docker
+apt-get update
+apt-get install -y cloud-utils apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+apt-get update
+apt-get install -y docker-ce
+usermod -aG docker ubuntu
+
+docker pull ajeshkumar/welcome-demo
+docker run -d -p 80:8081 ajeshkumar/welcome-demo
+docker run --detach \
+    --name watchtower \
+    --volume /var/run/docker.sock:/var/run/docker.sock \
+    containrrr/watchtower
+
